@@ -27,3 +27,14 @@ public class CorujaoapiApplication {
  *  package service -> interface GenreService
  *  	package service impl -> classe GenreSerbiveImpl
  */
+
+/*
+ * Inclui o implements Serializable no Document somente se precisar 
+ * que o objeto seja convertido em bytes p trafegar em rede ou gravar
+ * em arquivo
+ */
+
+/*
+ * List é apenas uma interface (e não pode instanciar interface)
+ * por isso colocamos ArrayList (é uma implementação do list)
+ */

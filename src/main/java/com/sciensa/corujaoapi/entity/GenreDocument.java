@@ -5,10 +5,6 @@ import java.util.Date;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-/*
- * Inclui o implements Serializable se precisar que o objeto seja convertido
- * em bytes p trafegar em rede ou gravar em arquivo
- */
 @Document(collection="genre")
 public class GenreDocument {
 	
