@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sciensa.corujaoapi.entity.MovieDocument;
@@ -28,7 +29,12 @@ public class MovieController {
 	private MovieService service;
 
 	@GetMapping(value = "/movies", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<MovieDocument>> listMovies() {
+	public ResponseEntity<List<MovieDocument>> listMovies(@RequestParam(required = false) Integer page, 
+			@RequestParam(required = false) Integer size, @RequestParam(required = false) String search) {
+		
+		if (page == null) page = 1;
+		if (size == null) size = 10;
+		if (search == null) search = "";
 		
 		try {
 			

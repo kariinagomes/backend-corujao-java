@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sciensa.corujaoapi.entity.ArtistDocument;
@@ -27,7 +28,12 @@ public class ArtistController {
 	private ArtistService service;
 
 	@GetMapping(value = "/artists", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<ArtistDocument>> listArtists() {
+	public ResponseEntity<List<ArtistDocument>> listArtists(@RequestParam(required = false) Integer page, 
+			@RequestParam(required = false) Integer size, @RequestParam(required = false) String search) {
+		
+		if (page == null) page = 1;
+		if (size == null) size = 10;
+		if (search == null) search = "";
 		
 		try {
 			

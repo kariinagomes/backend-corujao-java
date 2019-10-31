@@ -1,9 +1,12 @@
 package com.sciensa.corujaoapi.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import com.sciensa.corujaoapi.entity.GenreDocument;
@@ -17,8 +20,24 @@ public class GenreServiceImpl implements GenreService {
 	private GenreRepository repo;
 	
 	@Override
-	public List<GenreDocument> listGenres() {
-		return repo.findAll();
+	public List<GenreDocument> listGenres(Integer page, Integer size, String search) {
+		
+		Page<GenreDocument> genres = repo.findAll(PageRequest.of(page, size));
+		
+		if (!search.isEmpty()) {	
+			
+			List<GenreDocument> genresFiltered = new ArrayList<>();
+			
+			for (GenreDocument genre : genres.toList()) {
+				if (genre.getDescription().toLowerCase().contains(search.toLowerCase())) {
+					genresFiltered.add(genre);
+				}
+			}
+			
+			return genresFiltered;
+		}
+
+		return genres.toList();
 	}
 
 	@Override
