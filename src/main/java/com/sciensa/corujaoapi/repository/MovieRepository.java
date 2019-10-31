@@ -7,5 +7,5 @@ import com.sciensa.corujaoapi.entity.MovieDocument;
 
 @Repository
 public interface MovieRepository extends MongoRepository<MovieDocument, String> {
-
+	
 }

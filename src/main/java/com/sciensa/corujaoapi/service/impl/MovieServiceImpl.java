@@ -27,13 +27,13 @@ public class MovieServiceImpl implements MovieService {
 	}
 
 	@Override
-	public Optional<MovieDocument> getMovie(String id) {
-		return repo.findById(id);
+	public Optional<MovieDocument> getMovie(String movieId) {
+		return repo.findById(movieId);
 	}
 
 	@Override
-	public MovieDocument updateMovie(String id, MovieDocument movieBody) {
-		if (repo.existsById(id)) {
+	public MovieDocument updateMovie(String movieId, MovieDocument movieBody) {
+		if (repo.existsById(movieId)) {
 			return repo.save(movieBody);
 		}
 		
@@ -41,9 +41,9 @@ public class MovieServiceImpl implements MovieService {
 	}
 
 	@Override
-	public void removeMovie(String id) {
-		if (repo.existsById(id)) {
-			repo.deleteById(id);
+	public void removeMovie(String movieId) {
+		if (repo.existsById(movieId)) {
+			repo.deleteById(movieId);
 		}
 	}
 }

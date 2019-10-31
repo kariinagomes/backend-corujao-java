@@ -8,6 +8,6 @@ import com.sciensa.corujaoapi.entity.GenreDocument;
 public interface GenreService {
 	public List<GenreDocument> listGenres();
 	public GenreDocument addGenre(GenreDocument genreBody);
-	public Optional<GenreDocument> getGenre(String id);
-	public GenreDocument updateGenre(String id, GenreDocument genreBody);
+	public Optional<GenreDocument> getGenre(String genreId);
+	public GenreDocument updateGenre(String genreId, GenreDocument genreBody);
 }

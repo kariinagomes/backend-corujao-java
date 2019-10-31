@@ -1,7 +1,4 @@
 package com.sciensa.corujaoapi.controller;
-
-/*import java.util.ArrayList;
-import java.util.Date;*/
 import java.util.List;
 import java.util.Optional;
 
@@ -45,7 +42,7 @@ public class GenreController {
 	@PostMapping(value = "/genres", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<GenreDocument> addGenre(@RequestBody GenreDocument genreBody) {
 		
-		if (genreBody == null) {
+		if (genreBody.getDescription() == null || genreBody.getDescription() == "") {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 		}
 		
@@ -61,16 +58,16 @@ public class GenreController {
 		
 	}
 	
-	@GetMapping(value = "/genres/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Optional<GenreDocument>> getGenre(@PathVariable(value = "id") String id) {
+	@GetMapping(value = "/genres/{genreId}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Optional<GenreDocument>> getGenre(@PathVariable(value = "genreId") String genreId) {
 		
-		if (id == null) {
+		if (genreId == null) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 		}
 		
 		try {
 			
-			Optional<GenreDocument> genre = service.getGenre(id);
+			Optional<GenreDocument> genre = service.getGenre(genreId);
 			
 			return ResponseEntity.status(HttpStatus.OK).body(genre);
 			
@@ -80,16 +77,16 @@ public class GenreController {
 		
 	}
 	
-	@PutMapping(value = "/genres/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<GenreDocument> updateGenre(@PathVariable(value = "id") String id, @RequestBody GenreDocument genreBody) {
+	@PutMapping(value = "/genres/{genreId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<GenreDocument> updateGenre(@PathVariable(value = "genreId") String genreId, @RequestBody GenreDocument genreBody) {
 		
-		if (genreBody == null) {
+		if (genreBody.getDescription() == null || genreBody.getDescription() == "") {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 		}
 		
 		try {
 			
-			GenreDocument genre = service.updateGenre(id, genreBody);
+			GenreDocument genre = service.updateGenre(genreId, genreBody);
 			
 			return ResponseEntity.status(HttpStatus.OK).body(genre);
 			

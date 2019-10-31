@@ -27,13 +27,13 @@ public class GenreServiceImpl implements GenreService {
 	}
 
 	@Override
-	public Optional<GenreDocument> getGenre(String id) {
-		return repo.findById(id);
+	public Optional<GenreDocument> getGenre(String genreId) {
+		return repo.findById(genreId);
 	}
 
 	@Override
-	public GenreDocument updateGenre(String id, GenreDocument genreBody) {
-		if (repo.existsById(id)) {
+	public GenreDocument updateGenre(String genreId, GenreDocument genreBody) {
+		if (repo.existsById(genreId)) {
 			return repo.save(genreBody);
 		}
 		

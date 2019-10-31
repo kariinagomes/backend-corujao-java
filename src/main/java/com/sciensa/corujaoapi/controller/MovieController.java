@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -60,16 +61,16 @@ public class MovieController {
 		
 	}
 	
-	@GetMapping(value = "/movies/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Optional<MovieDocument>> getMovie(@PathVariable(value = "id") String id) {
+	@GetMapping(value = "/movies/{movieId}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Optional<MovieDocument>> getMovie(@PathVariable(value = "movieId") String movieId) {
 		
-		if (id == null) {
+		if (movieId == null) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 		}
 		
 		try {
 			
-			Optional<MovieDocument> movie = service.getMovie(id);	
+			Optional<MovieDocument> movie = service.getMovie(movieId);	
 						
 			
 			return ResponseEntity.status(HttpStatus.OK).body(movie);
@@ -80,8 +81,8 @@ public class MovieController {
 		
 	}
 	
-	@PutMapping(value = "/movies/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<MovieDocument> updateMovie(@PathVariable(value = "id") String id, @RequestBody MovieDocument movieBody) {
+	@PutMapping(value = "/movies/{movieId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<MovieDocument> updateMovie(@PathVariable(value = "movieId") String movieId, @RequestBody MovieDocument movieBody) {
 		
 		if (movieBody == null) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
@@ -89,7 +90,7 @@ public class MovieController {
 		
 		try {
 			
-			MovieDocument movie = service.updateMovie(id, movieBody);
+			MovieDocument movie = service.updateMovie(movieId, movieBody);
 			
 			return ResponseEntity.status(HttpStatus.OK).body(movie);
 			
@@ -99,11 +100,12 @@ public class MovieController {
 		
 	}
 	
-	public ResponseEntity<?> removeMovie(@PathVariable(value = "id") String id) {
+	@DeleteMapping(value = "/movies/{movieId}")
+	public ResponseEntity<?> removeMovie(@PathVariable(value = "movieId") String movieId) {
 		
 		try {
 			
-			service.removeMovie(id);	
+			service.removeMovie(movieId);	
 			
 			return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 			

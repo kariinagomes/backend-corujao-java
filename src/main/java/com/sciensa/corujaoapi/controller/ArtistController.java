@@ -60,16 +60,16 @@ public class ArtistController {
 		
 	}
 	
-	@GetMapping(value = "/artists/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Optional<ArtistDocument>> getArtist(@PathVariable(value = "id") String id) {
+	@GetMapping(value = "/artists/{artistId}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Optional<ArtistDocument>> getArtist(@PathVariable(value = "artistId") String artistId) {
 		
-		if (id == null) {
+		if (artistId == null) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 		}
 		
 		try {
 			
-			Optional<ArtistDocument> artist = service.getArtist(id);
+			Optional<ArtistDocument> artist = service.getArtist(artistId);
 			
 			return ResponseEntity.status(HttpStatus.OK).body(artist);
 			
@@ -79,8 +79,8 @@ public class ArtistController {
 		
 	}
 	
-	@PutMapping(value = "/artists/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<ArtistDocument> updateArtist(@PathVariable(value = "id") String id, @RequestBody ArtistDocument artistBody) {
+	@PutMapping(value = "/artists/{artistId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<ArtistDocument> updateArtist(@PathVariable(value = "artistId") String artistId, @RequestBody ArtistDocument artistBody) {
 		
 		if (artistBody == null) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
@@ -88,7 +88,7 @@ public class ArtistController {
 		
 		try {
 			
-			ArtistDocument artist = service.updateArtist(id, artistBody);
+			ArtistDocument artist = service.updateArtist(artistId, artistBody);
 			
 			return ResponseEntity.status(HttpStatus.OK).body(artist);
 			
@@ -98,10 +98,12 @@ public class ArtistController {
 		
 	}
 	
-	@GetMapping(value = "/artists/{id}/filmography", produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(value = "/artists/{artistId}/filmography", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<MovieDocument>> getArtistFilmography(@PathVariable(value = "artistId") String artistId) {
 		
-		return null;
+		List<MovieDocument> movies = service.getArtistFilmography(artistId);
+		
+		return ResponseEntity.status(HttpStatus.OK).body(movies);
 		
 	}
 }
