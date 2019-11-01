@@ -3,6 +3,7 @@ package com.sciensa.corujaoapi.entity;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection="movie")
@@ -10,8 +11,11 @@ public class MovieDocument {
 	private String id;
 	private String title;
 	private Integer releaseYear;
+	@DBRef
 	private List<GenreDocument> genres;
+	@DBRef
 	private ArtistDocument director;
+	@DBRef
 	private List<ArtistDocument> cast;
 	private Date cretaedAt;
 	private Date updatedAt;

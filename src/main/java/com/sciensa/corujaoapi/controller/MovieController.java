@@ -29,7 +29,7 @@ public class MovieController {
 	private MovieService service;
 
 	@GetMapping(value = "/movies", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<MovieDocument>> listMovies(@RequestParam(required = false) Integer page, 
+	public ResponseEntity<?> listMovies(@RequestParam(required = false) Integer page, 
 			@RequestParam(required = false) Integer size, @RequestParam(required = false) String search) {
 		
 		if (page == null) page = 1;
@@ -38,18 +38,18 @@ public class MovieController {
 		
 		try {
 			
-			List<MovieDocument> movies = service.listMovies();	
+			List<MovieDocument> movies = service.listMovies(page, size, search);	
 			
 			return ResponseEntity.status(HttpStatus.OK).body(movies);
 			
 		} catch(Exception ex) {		
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex);
 		}
 		
 	}
 	
 	@PostMapping(value = "/movies", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<MovieDocument> addMovie(@RequestBody MovieDocument movieBody) {
+	public ResponseEntity<?> addMovie(@RequestBody MovieDocument movieBody) {
 		
 		if (movieBody == null) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
@@ -57,18 +57,18 @@ public class MovieController {
 		
 		try {
 			
-			MovieDocument movie = service.addMovie(movieBody);	
+			Optional<MovieDocument> movie = service.addMovie(movieBody);	
 			
 			return ResponseEntity.status(HttpStatus.OK).body(movie);
 			
 		} catch(Exception ex) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex);
 		}
 		
 	}
 	
 	@GetMapping(value = "/movies/{movieId}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Optional<MovieDocument>> getMovie(@PathVariable(value = "movieId") String movieId) {
+	public ResponseEntity<?> getMovie(@PathVariable(value = "movieId") String movieId) {
 		
 		if (movieId == null) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
@@ -82,13 +82,13 @@ public class MovieController {
 			return ResponseEntity.status(HttpStatus.OK).body(movie);
 			
 		} catch(Exception ex) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex);
 		}	
 		
 	}
 	
 	@PutMapping(value = "/movies/{movieId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<MovieDocument> updateMovie(@PathVariable(value = "movieId") String movieId, @RequestBody MovieDocument movieBody) {
+	public ResponseEntity<?> updateMovie(@PathVariable(value = "movieId") String movieId, @RequestBody MovieDocument movieBody) {
 		
 		if (movieBody == null) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
@@ -96,12 +96,12 @@ public class MovieController {
 		
 		try {
 			
-			MovieDocument movie = service.updateMovie(movieId, movieBody);
+			Optional<MovieDocument> movie = service.updateMovie(movieId, movieBody);
 			
 			return ResponseEntity.status(HttpStatus.OK).body(movie);
 			
 		} catch(Exception ex) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex);
 		}
 		
 	}
@@ -116,7 +116,7 @@ public class MovieController {
 			return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 			
 		} catch(Exception ex) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex);
 		}
 	}
 

@@ -22,7 +22,7 @@ public class GenreServiceImpl implements GenreService {
 	@Override
 	public List<GenreDocument> listGenres(Integer page, Integer size, String search) {
 		
-		Page<GenreDocument> genres = repo.findAll(PageRequest.of(page, size));
+		Page<GenreDocument> genres = repo.findAll(PageRequest.of(page - 1, size));
 		
 		if (!search.isEmpty()) {	
 			

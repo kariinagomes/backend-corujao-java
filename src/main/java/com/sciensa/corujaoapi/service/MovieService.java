@@ -6,9 +6,9 @@ import java.util.Optional;
 import com.sciensa.corujaoapi.entity.MovieDocument;
 
 public interface MovieService {
-	public List<MovieDocument> listMovies();
-	public MovieDocument addMovie(MovieDocument movieBody);
+	public List<MovieDocument> listMovies(Integer page, Integer size, String search);
+	public Optional<MovieDocument> addMovie(MovieDocument movieBody);
 	public Optional<MovieDocument> getMovie(String movieId);
-	public MovieDocument updateMovie(String movieId, MovieDocument movieBody);
+	public Optional<MovieDocument> updateMovie(String movieId, MovieDocument movieBody);
 	public void removeMovie(String movieId);
 }

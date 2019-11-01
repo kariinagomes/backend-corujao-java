@@ -37,7 +37,7 @@ public class ArtistController {
 		
 		try {
 			
-			List<ArtistDocument> artists = service.listArtists();	
+			List<ArtistDocument> artists = service.listArtists(page, size, search);	
 			
 			return ResponseEntity.status(HttpStatus.OK).body(artists);
 			

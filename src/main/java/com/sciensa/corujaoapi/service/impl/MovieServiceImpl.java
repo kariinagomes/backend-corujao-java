@@ -1,9 +1,12 @@
 package com.sciensa.corujaoapi.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import com.sciensa.corujaoapi.entity.MovieDocument;
@@ -17,13 +20,31 @@ public class MovieServiceImpl implements MovieService {
 	private MovieRepository repo;
 	
 	@Override
-	public List<MovieDocument> listMovies() {
-		return repo.findAll();
+	public List<MovieDocument> listMovies(Integer page, Integer size, String search) {
+		
+		Page<MovieDocument> movies = repo.findAll(PageRequest.of(page - 1, size));
+		
+		if (!search.isEmpty()) {	
+			
+			List<MovieDocument> moviesFiltered = new ArrayList<>();
+			
+			for (MovieDocument movie : movies.toList()) {
+				if (movie.getTitle().toLowerCase().contains(search.toLowerCase())) {
+					moviesFiltered.add(movie);
+				}
+			}
+			
+			return moviesFiltered;
+		}
+
+		return movies.toList();
 	}
 
 	@Override
-	public MovieDocument addMovie(MovieDocument movieBody) {
-		return repo.insert(movieBody);
+	public Optional<MovieDocument> addMovie(MovieDocument movieBody) {
+		MovieDocument movie = repo.insert(movieBody);
+		
+		return repo.findById(movie.getId());
 	}
 
 	@Override
@@ -32,9 +53,12 @@ public class MovieServiceImpl implements MovieService {
 	}
 
 	@Override
-	public MovieDocument updateMovie(String movieId, MovieDocument movieBody) {
+	public Optional<MovieDocument> updateMovie(String movieId, MovieDocument movieBody) {
+		
 		if (repo.existsById(movieId)) {
-			return repo.save(movieBody);
+			MovieDocument movie = repo.save(movieBody);
+			
+			return repo.findById(movie.getId());
 		}
 		
 		return null;
