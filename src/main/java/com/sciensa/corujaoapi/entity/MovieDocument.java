@@ -3,6 +3,8 @@ package com.sciensa.corujaoapi.entity;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -17,7 +19,9 @@ public class MovieDocument {
 	private ArtistDocument director;
 	@DBRef
 	private List<ArtistDocument> cast;
+	@CreatedDate
 	private Date cretaedAt;
+	@LastModifiedDate
 	private Date updatedAt;
 	
 	public MovieDocument(String id, String title, Integer releaseYear, List<GenreDocument> genres,

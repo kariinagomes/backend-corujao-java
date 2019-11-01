@@ -2,7 +2,9 @@ package com.sciensa.corujaoapi.entity;
 
 import java.util.Date;
 
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection="genre")
@@ -11,7 +13,9 @@ public class GenreDocument {
 	@Id
     private String id;
     private String description;
+    @CreatedDate
     private Date createdAt;
+    @LastModifiedDate
     private Date updatedAt;
 	
     //construtor: chamado no momento da criação do objeto; instanciar a classe que foi definida

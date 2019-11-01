@@ -2,6 +2,8 @@ package com.sciensa.corujaoapi.entity;
 
 import java.util.Date;
 
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "artist")
@@ -10,7 +12,9 @@ public class ArtistDocument {
 	private String firstName;
 	private String lastName;
 	private Date dateOfBirth;
+	@CreatedDate
 	private Date createdAt;
+	@LastModifiedDate
 	private Date updatedAt;
 	
 	public ArtistDocument(String id, String firstName, String lastName, Date dateOfBirth, Date createdAt,
